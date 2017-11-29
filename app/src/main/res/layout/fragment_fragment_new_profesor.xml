@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jose.actividad_4a.FragmentNewProfesor"
+    android:background="@drawable/border">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/btnSaveProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="230dp"
+        android:text="Guardar"
+
+
+        />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="56dp"
+        android:layout_toStartOf="@+id/btnSaveProf"
+        android:text="Nombre:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView8"
+        android:layout_below="@+id/textView8"
+        android:layout_marginTop="30dp"
+        android:text="Edad:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView10"
+        android:layout_below="@+id/textView10"
+        android:layout_marginTop="30dp"
+        android:text="Tutor Curso:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView11"
+        android:layout_below="@+id/textView11"
+        android:layout_marginTop="30dp"
+        android:text="Despacho:"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/txtNomProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_toEndOf="@+id/textView8"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtEdadProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView10"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignStart="@+id/txtNomProf"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtCursoProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView11"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_alignStart="@+id/txtEdadProf"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtDespachoProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView12"
+        android:layout_alignBottom="@+id/textView12"
+        android:layout_alignStart="@+id/txtCursoProf"
+        android:ems="10"
+        android:inputType="textPersonName" />
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.jose.actividad_4a;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    //FINALS
+    private static final int ACT_GEST = 2;
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapterProfesores;
     private RecyclerView.Adapter adapterAlumnos;
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnVerProf;
     Button btnVerAlum;
+    Button btnGestionar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //Iniciacion Botones
         btnVerAlum = (Button) findViewById(R.id.button);
         btnVerProf = (Button) findViewById(R.id.button2);
+        btnGestionar = (Button) findViewById(R.id.btnGestor);
 
 
         btnVerAlum.setOnClickListener(new View.OnClickListener() {
@@ -66,5 +72,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnGestionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplication(), ActivityGestionar.class);
+                startActivityForResult(i,ACT_GEST);
+            }
+        });
     }
 }

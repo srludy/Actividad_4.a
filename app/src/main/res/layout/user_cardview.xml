@@ -54,16 +54,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/textView6"
                 android:layout_centerInParent="false"
-                android:layout_marginLeft="200dp"
+                android:layout_marginLeft="150dp"
                 android:layout_marginTop="40dp"
-                android:text="Tutor Curso:" />
+                android:text="Curso:" />
 
             <TextView
                 android:id="@+id/txtCurso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/textView9"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="5dp"
                 android:layout_toRightOf="@+id/textView9" />
 
             <TextView

@@ -38,7 +38,6 @@ public class AdapterAlumnos extends RecyclerView.Adapter<AdapterAlumnos.ViewHold
         }
     }
 
-
     @Override
     public AdapterAlumnos.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

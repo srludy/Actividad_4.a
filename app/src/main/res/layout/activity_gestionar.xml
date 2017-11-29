@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jose.actividad_4a.ActivityGestionar">
+
+    <Button
+        android:id="@+id/btnAddProf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="19dp"
+        android:text="Añadir Profesor"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btnAddAlum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btnAddProf"
+        android:layout_below="@+id/btnAddProf"
+        android:text="AÑADIR ALUMNO" />
+
+    <FrameLayout
+        android:id="@+id/frameLayoutFragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnAddAlum"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="Guardar Todo y Volver" />
+</RelativeLayout>
