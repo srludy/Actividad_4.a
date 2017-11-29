@@ -33,7 +33,7 @@ public class FragmentNewAlumno extends Fragment {
     private EditText nom;
     private EditText edad;
     private EditText curso;
-    private EditText despacho;
+    private EditText notaM;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,12 +73,12 @@ public class FragmentNewAlumno extends Fragment {
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_fragment_new_alumno, container, false);
 
-        save = (Button)v.findViewById(R.id.btnSaveProf);
+        save = (Button)v.findViewById(R.id.btnSaveAlum);
 
-        nom = (EditText) v.findViewById(R.id.txtNomProf);
-        edad = (EditText) v.findViewById(R.id.txtEdadProf);
-        curso = (EditText) v.findViewById(R.id.txtCursoProf);
-        despacho = (EditText) v.findViewById(R.id.txtDespachoProf);
+        nom = (EditText) v.findViewById(R.id.txtNomAlum);
+        edad = (EditText) v.findViewById(R.id.txtEdadAlum);
+        curso = (EditText) v.findViewById(R.id.txtCursoAlumn);
+        notaM = (EditText) v.findViewById(R.id.txtNotaMAlum);
 
 
         return v;
