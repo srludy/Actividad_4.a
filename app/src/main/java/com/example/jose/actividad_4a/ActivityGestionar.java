@@ -6,7 +6,6 @@ package com.example.jose.actividad_4a;
 
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 //import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static android.R.attr.fragment;
-
-public class ActivityGestionar extends AppCompatActivity implements FragmentNewAlumno.OnFragmentInteractionListener, FragmentNewProfesor.OnFragmentInteractionListener, addObject{
+public class ActivityGestionar extends AppCompatActivity implements FragmentNewAlumno.OnFragmentInteractionListener, FragmentNewProfesor.OnFragmentInteractionListener, addObject {
 
     private static final String FRAGMENT_ADD_ALUMN = "fragmentAddAlumno";
     private static final String FRAGMENT_ADD_PROF= "fragmentAddProf";
@@ -82,7 +79,17 @@ public class ActivityGestionar extends AppCompatActivity implements FragmentNewA
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                myDbAdapter.open();
+                if(!profesores.isEmpty()){
+                    for (int i = 0 ; i < profesores.size() ; i++){
+                        myDbAdapter.insertProfesor(profesores.get(i).getNombre(),profesores.get(i).getEdad(),profesores.get(i).getCurso(),profesores.get(i).getDespacho());
+                    }
+                }
+                if (!alumnos.isEmpty()) {
+                    for (int i = 0 ; i < alumnos.size() ; i++){
+                        myDbAdapter.insertarAlumno(alumnos.get(i).getNombre(), alumnos.get(i).getEdad(), alumnos.get(i).getCurso(), alumnos.get(i).getNotaM());
+                    }
+                }
             }
         });
 
@@ -110,10 +117,15 @@ public class ActivityGestionar extends AppCompatActivity implements FragmentNewA
     @Override
     public void addProf(Profesor profesor) {
 
+        deleteFragmentAddProfesor();
+        Toast.makeText(getApplicationContext(),"El profesor ha sido generado",Toast.LENGTH_LONG).show();
+        profesores.add(profesor);
     }
 
     @Override
     public void addAlum(Alumno alumno) {
-
+        deleteFragmentAddAlumno();
+        Toast.makeText(getApplicationContext(),"El Alumno ha sido generado",Toast.LENGTH_LONG).show();
+        alumnos.add(alumno);
     }
 }

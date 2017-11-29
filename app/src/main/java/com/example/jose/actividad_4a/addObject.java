@@ -5,6 +5,6 @@ package com.example.jose.actividad_4a;
  */
 
 public interface addObject {
-    public void addProf(Profesor profesor);
-    public void addAlum(Alumno alumno);
+   public void addProf(Profesor profesor);
+   public void addAlum(Alumno alumno);
 }

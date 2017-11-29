@@ -34,6 +34,7 @@ public class FragmentNewProfesor extends Fragment {
     private EditText edad;
     private EditText curso;
     private EditText despacho;
+    private addObject addObject;
 
     private OnFragmentInteractionListener mListener;
 
@@ -82,7 +83,8 @@ public class FragmentNewProfesor extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Profesor newProfesor = new Profesor(0,nom.getText().toString(),edad.getText().toString(),curso.getText().toString(),despacho.getText().toString());
+                addObject.addProf(newProfesor);
             }
         });
 
@@ -97,8 +99,10 @@ public class FragmentNewProfesor extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context){
         super.onAttach(context);
+        ActivityGestionar activityGestionar = (ActivityGestionar) context;
+        addObject = activityGestionar;
     }
 
     @Override

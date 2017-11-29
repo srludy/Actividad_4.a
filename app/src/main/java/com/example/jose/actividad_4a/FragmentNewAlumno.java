@@ -34,6 +34,7 @@ public class FragmentNewAlumno extends Fragment {
     private EditText edad;
     private EditText curso;
     private EditText notaM;
+    private addObject addObject;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,6 +81,13 @@ public class FragmentNewAlumno extends Fragment {
         curso = (EditText) v.findViewById(R.id.txtCursoAlumn);
         notaM = (EditText) v.findViewById(R.id.txtNotaMAlum);
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Alumno newAlumno = new Alumno(nom.getText().toString(),edad.getText().toString(),curso.getText().toString(),notaM.getText().toString());
+                addObject.addAlum(newAlumno);
+            }
+        });
 
         return v;
     }
@@ -93,13 +101,11 @@ public class FragmentNewAlumno extends Fragment {
 
     @Override
     public void onAttach(Context context) {
+
+        ActivityGestionar activityGestionar = (ActivityGestionar) context;
+        addObject = activityGestionar;
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override

@@ -1,14 +1,17 @@
 package com.example.jose.actividad_4a;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         profesors = new ArrayList();
         alumnos = new ArrayList();
 
-        Alumno alumno = new Alumno("Pepe","23","DAM","10");
-        Profesor profesor = new Profesor("Antonio","42","DAM","2.A");
-        profesors.add(profesor);
-        alumnos.add(alumno);
 
         //RecyclerView iniciaciones
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -51,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         //Adaptador de la base de datos
         myDbAdapter = new MyDbAdapter(this);
         myDbAdapter.open();
+       /* try{
+            myDbAdapter.insertProfesor("Ana Asins Aleixandre","23","DAW 2","10");
+            Toast.makeText(getApplicationContext(),"Se ha añadido",Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),"No se ha podido añadir",Toast.LENGTH_LONG).show();
+        }
+        */
 
         //Iniciacion Botones
         btnVerAlum = (Button) findViewById(R.id.button);
