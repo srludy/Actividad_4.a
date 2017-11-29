@@ -1,10 +1,13 @@
 package com.example.jose.actividad_4a;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Jose on 28/11/2017.
  */
 
-public class Alumno {
+public class Alumno implements Parcelable {
     private String nombre;
     private String edad;
     private String curso;
@@ -48,4 +51,36 @@ public class Alumno {
     public void setNotaM(String notaM) {
         this.notaM = notaM;
     }
+
+    protected Alumno(Parcel in) {
+        nombre = in.readString();
+        edad = in.readString();
+        curso = in.readString();
+        notaM = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nombre);
+        dest.writeString(edad);
+        dest.writeString(curso);
+        dest.writeString(notaM);
+    }
+
+    public static final Parcelable.Creator<Alumno> CREATOR = new Parcelable.Creator<Alumno>() {
+        @Override
+        public Alumno createFromParcel(Parcel in) {
+            return new Alumno(in);
+        }
+
+        @Override
+        public Alumno[] newArray(int size) {
+            return new Alumno[size];
+        }
+    };
 }

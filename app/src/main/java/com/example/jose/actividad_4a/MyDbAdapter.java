@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Jose on 28/11/2017.
  */
 
-public class MyDbAdapter {
+public class MyDbAdapter implements Parcelable {
 
 
     private static final String DATA_BASE_NAME = "dbEscuela.db";
@@ -84,5 +86,36 @@ public class MyDbAdapter {
             db.execSQL(DROP_TABLE_PROF);
             onCreate(db);
         }
+    }
+
+    protected MyDbAdapter(Parcel in) {
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<MyDbAdapter> CREATOR = new Parcelable.Creator<MyDbAdapter>() {
+        @Override
+        public MyDbAdapter createFromParcel(Parcel in) {
+            return new MyDbAdapter(in);
+        }
+
+        @Override
+        public MyDbAdapter[] newArray(int size) {
+            return new MyDbAdapter[size];
+        }
+    };
+
+    public SQLiteDatabase getDb() {
+        return db;
     }
 }

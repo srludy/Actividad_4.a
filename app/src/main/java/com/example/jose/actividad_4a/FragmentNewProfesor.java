@@ -79,6 +79,13 @@ public class FragmentNewProfesor extends Fragment {
         curso = (EditText) v.findViewById(R.id.txtCursoAlumn);
         notaM = (EditText) v.findViewById(R.id.txtNotaMAlum);
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return v;
     }
 

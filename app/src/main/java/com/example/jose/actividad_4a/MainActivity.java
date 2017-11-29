@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList <Alumno> alumnos;
     ArrayList <Profesor> profesors;
+    MyDbAdapter myDbAdapter;
 
     Button btnVerProf;
     Button btnVerAlum;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //ArrayLists
         profesors = new ArrayList();
         alumnos = new ArrayList();
+
         Alumno alumno = new Alumno("Pepe","23","DAM","10");
         Profesor profesor = new Profesor("Antonio","42","DAM","2.A");
         profesors.add(profesor);
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Adaptador de la base de datos
-        MyDbAdapter myDbAdapter = new MyDbAdapter(this);
+        myDbAdapter = new MyDbAdapter(this);
         myDbAdapter.open();
 
         //Iniciacion Botones
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplication(), ActivityGestionar.class);
+                i.putExtra("adapter", myDbAdapter);
                 startActivityForResult(i,ACT_GEST);
             }
         });
