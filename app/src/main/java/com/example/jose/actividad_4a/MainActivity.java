@@ -100,12 +100,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
+        switch(resultCode){
             case RESULT_OK:
                 recyclerView.setVisibility(View.GONE);
                 actualizaArrayPorf();
                 actualizaArrayAlum();
-                adapterAlumnos.u
+                adapterAlumnos.notifyDataSetChanged();
+                adapterProfesores.notifyDataSetChanged();
                 break;
             case RESULT_CANCELED:
                 recyclerView.setVisibility(View.GONE);
