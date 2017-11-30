@@ -12,24 +12,24 @@ public class Alumno implements Parcelable {
     private String edad;
     private String curso;
     private String notaM;
-    //private int id;
+    private int id;
 
-    public Alumno( String nombre, String edad, String curso, String notaM) {
-     //   this.id = id;
+    public Alumno(int id, String nombre, String edad, String curso, String notaM) {
+        this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.curso = curso;
         this.notaM = notaM;
     }
 
-   /* public int getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
-    */
+
     public String getNombre() {
         return nombre;
     }
@@ -63,7 +63,7 @@ public class Alumno implements Parcelable {
     }
 
     protected Alumno(Parcel in) {
-       // id = in.readInt();
+        id = in.readInt();
         nombre = in.readString();
         edad = in.readString();
         curso = in.readString();
@@ -77,7 +77,7 @@ public class Alumno implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        //dest.writeInt(id);
+        dest.writeInt(id);
         dest.writeString(nombre);
         dest.writeString(edad);
         dest.writeString(curso);

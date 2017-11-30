@@ -16,10 +16,12 @@ public class AdapterAlumnos extends RecyclerView.Adapter<AdapterAlumnos.ViewHold
 
 
     ArrayList <Alumno> alumnos;
+    AdapterAlumnos.ViewHolder vh;
 
     public AdapterAlumnos (ArrayList <Alumno> alumnos){
         this.alumnos = alumnos;
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nomView;
@@ -36,16 +38,21 @@ public class AdapterAlumnos extends RecyclerView.Adapter<AdapterAlumnos.ViewHold
              notaMView = (TextView) itemView.findViewById(R.id.txtNotaM);
 
         }
+
+    }
+
+    public void updateData(ArrayList<Alumno> alumnos) {
+        this.alumnos.clear();
+        this.alumnos.addAll(alumnos);
+        notifyDataSetChanged();
     }
 
     @Override
     public AdapterAlumnos.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_cardview, parent, false);
-        ViewHolder vh = new ViewHolder(v);
+        vh = new ViewHolder(v);
         return vh;
     }
-
     @Override
     public void onBindViewHolder(AdapterAlumnos.ViewHolder holder, int position) {
         holder.nomView.setText(alumnos.get(position).getNombre());
@@ -59,4 +66,11 @@ public class AdapterAlumnos extends RecyclerView.Adapter<AdapterAlumnos.ViewHold
         return alumnos.size();
     }
 
+    public ArrayList<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(ArrayList<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
 }

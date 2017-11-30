@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,27 +37,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Adaptador de la base de datos
+        myDbAdapter = new MyDbAdapter(this);
+
         //ArrayLists
         profesors = new ArrayList();
         alumnos = new ArrayList();
-
+        actualizaArrayPorf();
+        actualizaArrayAlum();
 
         //RecyclerView iniciaciones
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        //Adaptador de la base de datos
-        myDbAdapter = new MyDbAdapter(this);
-        myDbAdapter.open();
-       /* try{
-            myDbAdapter.insertProfesor("Ana Asins Aleixandre","23","DAW 2","10");
-            Toast.makeText(getApplicationContext(),"Se ha añadido",Toast.LENGTH_LONG).show();
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(),"No se ha podido añadir",Toast.LENGTH_LONG).show();
-        }
-        */
+        adapterAlumnos = new AdapterAlumnos(alumnos);
+        adapterProfesores = new AdapterProfesores(profesors);
 
         //Iniciacion Botones
         btnVerAlum = (Button) findViewById(R.id.button);
@@ -67,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnVerAlum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterAlumnos = new AdapterAlumnos(alumnos);
+                recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(adapterAlumnos);
             }
         });
@@ -75,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btnVerProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterProfesores = new AdapterProfesores(profesors);
+                recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(adapterProfesores);
             }
         });
@@ -84,9 +80,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplication(), ActivityGestionar.class);
-                i.putExtra("adapter", myDbAdapter);
+                // i.putExtra("adapter", myDbAdapter);
                 startActivityForResult(i,ACT_GEST);
             }
         });
+    }
+
+    private void actualizaArrayAlum() {
+        myDbAdapter.open();
+        alumnos = myDbAdapter.selectAlumnos();
+        myDbAdapter.close();
+    }
+    private void actualizaArrayPorf(){
+        myDbAdapter.open();
+        profesors = myDbAdapter.selectProfesores();
+        myDbAdapter.close();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case RESULT_OK:
+                recyclerView.setVisibility(View.GONE);
+                actualizaArrayPorf();
+                actualizaArrayAlum();
+                adapterAlumnos.u
+                break;
+            case RESULT_CANCELED:
+                recyclerView.setVisibility(View.GONE);
+                break;
+        }
     }
 }

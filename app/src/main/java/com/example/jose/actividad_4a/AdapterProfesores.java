@@ -61,4 +61,11 @@ public class AdapterProfesores extends RecyclerView.Adapter<AdapterProfesores.Vi
         return profesores.size();
     }
 
+    public ArrayList<Profesor> getProfesores() {
+        return profesores;
+    }
+
+    public void setProfesores(ArrayList<Profesor> profesores) {
+        this.profesores = profesores;
+    }
 }

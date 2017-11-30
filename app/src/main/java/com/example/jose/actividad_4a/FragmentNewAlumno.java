@@ -84,7 +84,7 @@ public class FragmentNewAlumno extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Alumno newAlumno = new Alumno(nom.getText().toString(),edad.getText().toString(),curso.getText().toString(),notaM.getText().toString());
+                Alumno newAlumno = new Alumno(0,nom.getText().toString(),edad.getText().toString(),curso.getText().toString(),notaM.getText().toString());
                 addObject.addAlum(newAlumno);
             }
         });

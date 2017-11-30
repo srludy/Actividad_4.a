@@ -7,6 +7,7 @@ package com.example.jose.actividad_4a;
 
 import android.app.Fragment;
 //import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,13 +40,15 @@ public class ActivityGestionar extends AppCompatActivity implements FragmentNewA
 
         profesores = new ArrayList();
         alumnos = new ArrayList();
-        myDbAdapter = getIntent().getParcelableExtra("adapter");
+       // myDbAdapter = getIntent().getParcelableExtra("adapter");
 
         frameLayout = (FrameLayout) findViewById(R.id.frameLayoutFragments);
 
         btnAddAlumn = (Button) findViewById(R.id.btnAddAlum);
         btnAddProf = (Button) findViewById(R.id.btnAddProf);
         btnGuardar = (Button) findViewById(R.id.btnBack);
+
+        myDbAdapter = new MyDbAdapter(getApplicationContext());
 
         btnAddAlumn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,16 +83,27 @@ public class ActivityGestionar extends AppCompatActivity implements FragmentNewA
             @Override
             public void onClick(View v) {
                 myDbAdapter.open();
+                boolean addeditems = false;
+
                 if(!profesores.isEmpty()){
                     for (int i = 0 ; i < profesores.size() ; i++){
                         myDbAdapter.insertProfesor(profesores.get(i).getNombre(),profesores.get(i).getEdad(),profesores.get(i).getCurso(),profesores.get(i).getDespacho());
                     }
+                    addeditems = true;
                 }
                 if (!alumnos.isEmpty()) {
                     for (int i = 0 ; i < alumnos.size() ; i++){
                         myDbAdapter.insertarAlumno(alumnos.get(i).getNombre(), alumnos.get(i).getEdad(), alumnos.get(i).getCurso(), alumnos.get(i).getNotaM());
                     }
+                    addeditems = true;
                 }
+                myDbAdapter.close();
+                if (addeditems){
+                    setResult(RESULT_OK);
+                }else{
+                    setResult(RESULT_CANCELED);
+                }
+                finish();
             }
         });
 
