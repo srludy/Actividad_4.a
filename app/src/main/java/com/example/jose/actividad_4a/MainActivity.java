@@ -102,11 +102,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch(resultCode){
             case RESULT_OK:
-                recyclerView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.INVISIBLE);
                 actualizaArrayPorf();
                 actualizaArrayAlum();
-                adapterAlumnos.notifyDataSetChanged();
-                adapterProfesores.notifyDataSetChanged();
+                recyclerView.
                 break;
             case RESULT_CANCELED:
                 recyclerView.setVisibility(View.GONE);
