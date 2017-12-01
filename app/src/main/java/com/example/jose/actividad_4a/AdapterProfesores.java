@@ -37,6 +37,12 @@ public class AdapterProfesores extends RecyclerView.Adapter<AdapterProfesores.Vi
         }
     }
 
+    public void updateData(ArrayList<Profesor> profesores) {
+        this.profesores.clear();
+        this.profesores.addAll(profesores);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public AdapterProfesores.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapterProfesores;
-    private RecyclerView.Adapter adapterAlumnos;
+    private AdapterAlumnos adapterAlumnos;
     private RecyclerView.LayoutManager layoutManager;
 
     ArrayList <Alumno> alumnos;
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.INVISIBLE);
                 actualizaArrayPorf();
                 actualizaArrayAlum();
-                recyclerView.
+                adapterAlumnos.updateData(alumnos);
                 break;
             case RESULT_CANCELED:
                 recyclerView.setVisibility(View.GONE);
