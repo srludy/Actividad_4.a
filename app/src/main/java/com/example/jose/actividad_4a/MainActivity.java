@@ -6,8 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -20,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int ACT_GEST = 2;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapterProfesores;
+    private AdapterProfesores adapterProfesores;
     private AdapterAlumnos adapterAlumnos;
     private RecyclerView.LayoutManager layoutManager;
+    private String adapterString = "";
 
     ArrayList <Alumno> alumnos;
     ArrayList <Profesor> profesors;
@@ -31,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnVerProf;
     Button btnVerAlum;
     Button btnGestionar;
+
+    Spinner spinner2;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +62,26 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapterAlumnos = new AdapterAlumnos(alumnos);
         adapterProfesores = new AdapterProfesores(profesors);
+        registerForContextMenu(recyclerView);
 
         //Iniciacion Botones
         btnVerAlum = (Button) findViewById(R.id.button);
         btnVerProf = (Button) findViewById(R.id.button2);
         btnGestionar = (Button) findViewById(R.id.btnGestor);
 
+        //Spiners
+        spinner2 = (Spinner)findViewById(R.id.spinner2);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        String[] cursos = {"TODOS","1","2"};
+        String[] ciclos = {"TODOS","DAM","ASIR","DAW"};
+        spinner2.setAdapter(new ArrayAdapter(this, android.R.layout.simple_spinner_item,cursos));
+        spinner.setAdapter(new ArrayAdapter(this, android.R.layout.simple_spinner_item,ciclos));
+
 
         btnVerAlum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapterString = "alum";
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(adapterAlumnos);
             }
@@ -71,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         btnVerProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapterString = "prof";
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(adapterProfesores);
             }
@@ -80,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplication(), ActivityGestionar.class);
-                // i.putExtra("adapter", myDbAdapter);
                 startActivityForResult(i,ACT_GEST);
             }
         });
     }
+
 
     private void actualizaArrayAlum() {
         myDbAdapter.open();
@@ -106,10 +126,20 @@ public class MainActivity extends AppCompatActivity {
                 actualizaArrayPorf();
                 actualizaArrayAlum();
                 adapterAlumnos.updateData(alumnos);
+                adapterProfesores.updateData(profesors);
+                adapterString = "";
                 break;
             case RESULT_CANCELED:
-                recyclerView.setVisibility(View.GONE);
+                adapterString = "";
+                recyclerView.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contextmenu, menu);
     }
 }
