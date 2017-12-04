@@ -79,9 +79,18 @@ public class MyDbAdapter implements Parcelable {
         }
     }
 
-    public ArrayList<Alumno> selectAlumnos(){
+
+
+    public ArrayList<Alumno> selectAlumnos(String selectCiclo, String selectCurso){
         ArrayList<Alumno> alumnos = new ArrayList();
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_ALUMNOS+";",null);
+        Cursor c = null;
+        if(selectCiclo.equals("TODOS") && selectCurso.equals("TODOS")){
+            c = db.rawQuery("SELECT * FROM "+TABLE_ALUMNOS+";",null);
+        }else{
+            if(!selectCiclo.equals("TODOS") && !selectCurso.equals("TODOS")){
+                c = db.rawQuery("SELECT * FROM "+TABLE_ALUMNOS+" WHERE curso='"+selectCiclo+" "+selectCurso+"';",null);
+            }
+        }
         try{
             if(c.moveToFirst()) {
                 do{

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnVerProf;
     Button btnVerAlum;
     Button btnGestionar;
+    Button btnFiltrar;
 
     Spinner spinner2;
     Spinner spinner;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         profesors = new ArrayList();
         alumnos = new ArrayList();
         actualizaArrayPorf();
-        actualizaArrayAlum();
+        actualizaArrayAlum("DAM","2");
 
         //RecyclerView iniciaciones
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(recyclerView);
 
         //Iniciacion Botones
+        btnFiltrar = (Button) findViewById(R.id.button3);
         btnVerAlum = (Button) findViewById(R.id.button);
         btnVerProf = (Button) findViewById(R.id.button2);
         btnGestionar = (Button) findViewById(R.id.btnGestor);
@@ -77,6 +79,18 @@ public class MainActivity extends AppCompatActivity {
         spinner2.setAdapter(new ArrayAdapter(this, android.R.layout.simple_spinner_item,cursos));
         spinner.setAdapter(new ArrayAdapter(this, android.R.layout.simple_spinner_item,ciclos));
 
+
+        btnFiltrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(adapterString.equals("prof")){
+                }
+                if(adapterString.equals("alum")){
+                    actualizaArrayAlum(spinner.getSelectedItem().toString(),spinner2.getSelectedItem().toString());
+                    adapterAlumnos.updateData(alumnos);
+                }
+            }
+        });
 
         btnVerAlum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void actualizaArrayAlum() {
+    private void actualizaArrayAlum(String selectCiclo, String selectCurso) {
         myDbAdapter.open();
-        alumnos = myDbAdapter.selectAlumnos();
+        alumnos = myDbAdapter.selectAlumnos(selectCiclo, selectCurso);
         myDbAdapter.close();
     }
     private void actualizaArrayPorf(){
@@ -124,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             case RESULT_OK:
                 recyclerView.setVisibility(View.INVISIBLE);
                 actualizaArrayPorf();
-                actualizaArrayAlum();
+                actualizaArrayAlum("TODOS","TODOS");
                 adapterAlumnos.updateData(alumnos);
                 adapterProfesores.updateData(profesors);
                 adapterString = "";
