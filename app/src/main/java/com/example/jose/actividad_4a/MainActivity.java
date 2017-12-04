@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnVerAlum;
     Button btnGestionar;
     Button btnFiltrar;
+    Button btnDeleteDataBase;
 
     Spinner spinner2;
     Spinner spinner;
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         //ArrayLists
         profesors = new ArrayList();
         alumnos = new ArrayList();
-        actualizaArrayPorf();
-        actualizaArrayAlum("DAM","2");
+        actualizaArrayPorf("TODOS","TODOS");
+        actualizaArrayAlum("TODOS","TODOS");
 
         //RecyclerView iniciaciones
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btnVerAlum = (Button) findViewById(R.id.button);
         btnVerProf = (Button) findViewById(R.id.button2);
         btnGestionar = (Button) findViewById(R.id.btnGestor);
+        btnDeleteDataBase = (Button) findViewById(R.id.deleteDataBase);
 
         //Spiners
         spinner2 = (Spinner)findViewById(R.id.spinner2);
@@ -80,10 +82,22 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(new ArrayAdapter(this, android.R.layout.simple_spinner_item,ciclos));
 
 
+        btnDeleteDataBase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDbAdapter.open();
+                myDbAdapter.dropDatabase();
+                alumnos.clear();
+                profesors.clear();
+            }
+        });
+
         btnFiltrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(adapterString.equals("prof")){
+                    actualizaArrayPorf(spinner.getSelectedItem().toString(),spinner2.getSelectedItem().toString());
+                    adapterProfesores.updateData(profesors);
                 }
                 if(adapterString.equals("alum")){
                     actualizaArrayAlum(spinner.getSelectedItem().toString(),spinner2.getSelectedItem().toString());
@@ -125,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
         alumnos = myDbAdapter.selectAlumnos(selectCiclo, selectCurso);
         myDbAdapter.close();
     }
-    private void actualizaArrayPorf(){
+    private void actualizaArrayPorf(String selectCiclo, String selectCurso){
         myDbAdapter.open();
-        profesors = myDbAdapter.selectProfesores();
+        profesors = myDbAdapter.selectProfesores(selectCiclo,selectCurso);
         myDbAdapter.close();
     }
 
@@ -137,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         switch(resultCode){
             case RESULT_OK:
                 recyclerView.setVisibility(View.INVISIBLE);
-                actualizaArrayPorf();
+                actualizaArrayPorf("TODOS","TODOS");
                 actualizaArrayAlum("TODOS","TODOS");
                 adapterAlumnos.updateData(alumnos);
                 adapterProfesores.updateData(profesors);

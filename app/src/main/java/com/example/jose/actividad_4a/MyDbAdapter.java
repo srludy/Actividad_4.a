@@ -89,6 +89,12 @@ public class MyDbAdapter implements Parcelable {
         }else{
             if(!selectCiclo.equals("TODOS") && !selectCurso.equals("TODOS")){
                 c = db.rawQuery("SELECT * FROM "+TABLE_ALUMNOS+" WHERE curso='"+selectCiclo+" "+selectCurso+"';",null);
+            }else{
+                if(!selectCiclo.equals("TODOS") && selectCurso.equals("TODOS")){
+                    c = db.rawQuery("SELECT * FROM "+TABLE_ALUMNOS+" WHERE curso LIKE '"+selectCiclo+" %';",null);
+                }else{
+                    c = db.rawQuery("SELECT * FROM "+TABLE_ALUMNOS+" WHERE curso LIKE '% "+selectCurso+"';",null);
+                }
             }
         }
         try{
@@ -109,9 +115,22 @@ public class MyDbAdapter implements Parcelable {
         }
         return alumnos;
     }
-    public ArrayList<Profesor> selectProfesores(){
+    public ArrayList<Profesor> selectProfesores(String selectCiclo, String selectCurso){
         ArrayList<Profesor> profesores = new ArrayList();
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_PROFESORES+";",null);
+        Cursor c = null;
+        if(selectCiclo.equals("TODOS") && selectCurso.equals("TODOS")){
+            c = db.rawQuery("SELECT * FROM "+TABLE_PROFESORES+";",null);
+        }else{
+            if(!selectCiclo.equals("TODOS") && !selectCurso.equals("TODOS")){
+                c = db.rawQuery("SELECT * FROM "+TABLE_PROFESORES+" WHERE curso='"+selectCiclo+" "+selectCurso+"';",null);
+            }else{
+                if(!selectCiclo.equals("TODOS") && selectCurso.equals("TODOS")){
+                    c = db.rawQuery("SELECT * FROM "+TABLE_PROFESORES+" WHERE curso LIKE '"+selectCiclo+" %';",null);
+                }else{
+                    c = db.rawQuery("SELECT * FROM "+TABLE_PROFESORES+" WHERE curso LIKE '% "+selectCurso+"';",null);
+                }
+            }
+        }
         try{
             if(c.moveToFirst()) {
                 do{
@@ -130,6 +149,9 @@ public class MyDbAdapter implements Parcelable {
         }
         return profesores;
 
+    }
+    public void dropDatabase(){
+        context.deleteDatabase(DATA_BASE_NAME);
     }
 
     private static class MyDbHelper extends SQLiteOpenHelper{
