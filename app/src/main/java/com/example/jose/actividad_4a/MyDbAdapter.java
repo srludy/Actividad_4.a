@@ -115,6 +115,17 @@ public class MyDbAdapter implements Parcelable {
         }
         return alumnos;
     }
+    public void deleteItem(int id, String destino){
+        switch (destino){
+            case "prof":
+                db.execSQL("DELETE FROM "+TABLE_PROFESORES+" WHERE _id = "+id+";");
+                break;
+            case "alum":
+                db.execSQL("DELETE FROM "+TABLE_ALUMNOS+" WHERE _id = "+id+";");
+                break;
+        }
+    }
+
     public ArrayList<Profesor> selectProfesores(String selectCiclo, String selectCurso){
         ArrayList<Profesor> profesores = new ArrayList();
         Cursor c = null;

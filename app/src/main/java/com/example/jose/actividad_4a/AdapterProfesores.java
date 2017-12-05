@@ -42,7 +42,10 @@ public class AdapterProfesores extends RecyclerView.Adapter<AdapterProfesores.Vi
         this.profesores.addAll(profesores);
         notifyDataSetChanged();
     }
-
+    public void updateAfterDelete(ArrayList<Profesor> profesores, int position){
+        this.profesores = profesores;
+        notifyItemRemoved(position);
+    }
 
     @Override
     public AdapterProfesores.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

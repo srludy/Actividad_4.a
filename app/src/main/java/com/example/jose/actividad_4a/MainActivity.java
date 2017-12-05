@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private AdapterAlumnos adapterAlumnos;
     private RecyclerView.LayoutManager layoutManager;
     private String adapterString = "";
+    private int idSelected ;
+    private int positionSelected;
 
     ArrayList <Alumno> alumnos;
     ArrayList <Profesor> profesors;
@@ -62,9 +65,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapterAlumnos = new AdapterAlumnos(alumnos);
+        adapterAlumnos = new AdapterAlumnos(alumnos,this);
         adapterProfesores = new AdapterProfesores(profesors);
-        registerForContextMenu(recyclerView);
 
         //Iniciacion Botones
         btnFiltrar = (Button) findViewById(R.id.button3);
@@ -144,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
         profesors = myDbAdapter.selectProfesores(selectCiclo,selectCurso);
         myDbAdapter.close();
     }
+    public void getIdItem(int id, int position){
+        idSelected = id;
+        positionSelected = position;
+        Toast.makeText(getApplicationContext(),alumnos.get(position).getId()+alumnos.get(position).getNombre()+"  "+idSelected,Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -169,5 +176,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.contextmenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        myDbAdapter.open();
+        switch (item.getItemId()){
+            case R.id.eliminar:
+                myDbAdapter.deleteItem(idSelected, adapterString);
+                switch (adapterString){
+                    case "prof":
+                        profesors.remove(positionSelected);
+                        adapterProfesores.updateAfterDelete(profesors , positionSelected);
+                        break;
+                    case "alum":
+                        alumnos.remove(positionSelected);
+                        adapterAlumnos.updateAfterDelete(alumnos , positionSelected);
+                        break;
+                }
+                break;
+            case R.id.modificar:
+                break;
+        }
+        myDbAdapter.close();
+        return super.onContextItemSelected(item);
     }
 }
