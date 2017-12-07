@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapterAlumnos = new AdapterAlumnos(alumnos,this);
-        adapterProfesores = new AdapterProfesores(profesors);
+        adapterProfesores = new AdapterProfesores(profesors, this);
 
         //Iniciacion Botones
         btnFiltrar = (Button) findViewById(R.id.button3);

@@ -15,14 +15,16 @@ import java.util.ArrayList;
 public class AdapterProfesores extends RecyclerView.Adapter<AdapterProfesores.ViewHolder>{
 
     ArrayList <Profesor> profesores;
+    static MainActivity mainActivity;
 
-    public AdapterProfesores (ArrayList <Profesor> profesores){
+    public AdapterProfesores (ArrayList <Profesor> profesores, MainActivity mainActivity){
         this.profesores = profesores;
+        this.mainActivity = mainActivity;
 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
+        View v;
         TextView nomView;
         TextView edadView;
         TextView cursoView;
@@ -30,10 +32,12 @@ public class AdapterProfesores extends RecyclerView.Adapter<AdapterProfesores.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
+            this.v = itemView;
             nomView = (TextView) itemView.findViewById(R.id.txtNomP);
             edadView = (TextView) itemView.findViewById(R.id.txtEdadP);
             cursoView = (TextView) itemView.findViewById(R.id.txtCursoP);
             despachoView = (TextView) itemView.findViewById(R.id.txtDespacho);
+            itemView.setOnCreateContextMenuListener(mainActivity);
         }
     }
 
@@ -57,11 +61,18 @@ public class AdapterProfesores extends RecyclerView.Adapter<AdapterProfesores.Vi
     }
 
     @Override
-    public void onBindViewHolder(AdapterProfesores.ViewHolder holder, int position) {
+    public void onBindViewHolder(AdapterProfesores.ViewHolder holder, final int position) {
         holder.nomView.setText(profesores.get(position).getNombre());
         holder.edadView.setText(profesores.get(position).getEdad());
         holder.cursoView.setText(profesores.get(position).getCurso());
         holder.despachoView.setText(profesores.get(position).getDespacho());
+        holder.v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mainActivity.getIdItem(profesores.get(position).getId(), position);
+                return false;
+            }
+        });
 
     }
 
