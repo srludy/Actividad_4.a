@@ -18,37 +18,42 @@ import java.util.ArrayList;
 
 public class MyDbAdapter implements Parcelable {
 
-
+    //DATABASE
     private static final String DATA_BASE_NAME = "dbEscuela.db";
+    //TABLAS
     private static final String TABLE_PROFESORES = "profesores";
     private static final String TABLE_ALUMNOS = "alumnos";
     private static final int DATA_VERSION = 1;
 
+    //ATRIBUTOS TABLAS
     private static final String ATR_NOM = "nombre";
     private static final String ATR_EDAD = "edad";
     private static final String ATR_CURSO = "curso";
     private static final String ATR_DESPACHO = "despacho";
     private static final String ATR_NOTAM = "notamedia";
 
-
+    //CREATE TABLE SQL
     private static final String CREATE_TABLE_PROF = "CREATE TABLE "+TABLE_PROFESORES+" (_id integer primary key autoincrement,"+ATR_NOM+" text,"+ATR_EDAD+" text,"+ATR_CURSO+" text,"+ATR_DESPACHO+" text);";
     private static final String CREATE_TABLE_ALUM = "CREATE TABLE "+TABLE_ALUMNOS+" (_id integer primary key autoincrement,"+ATR_NOM+" text,"+ATR_EDAD+" text,"+ATR_CURSO+" text,"+ATR_NOTAM+" text);";
 
+    //DROP TABLE SQL
     private static final String DROP_TABLE_PROF = "DROP TABLE IF EXISTS "+TABLE_PROFESORES+";";
     private static final String DROP_TABLE_ALUM = "DROP TABLE IF EXISTS "+TABLE_ALUMNOS+";";
 
     private Context context;
 
+    //OBJETOS CLASE HELPER Y SQLITEDB
     private MyDbHelper myDbHelper;
-
     private SQLiteDatabase db;
 
 
+    //CONSTRUCTOR DE LA CLASE ADAPTADOR
     public MyDbAdapter(Context context){
         this.context = context;
         myDbHelper = new MyDbHelper(context, DATA_BASE_NAME, null, DATA_VERSION);
     }
 
+    //INSERT PROFESORES
     public void insertProfesor(String nom, String edad, String curso, String despacho){
         ContentValues CV = new ContentValues();
         CV.put(ATR_NOM,nom);
@@ -58,6 +63,7 @@ public class MyDbAdapter implements Parcelable {
         db.insert(TABLE_PROFESORES, null, CV);
         Toast.makeText(getContext(),"Añadido: "+nom,Toast.LENGTH_LONG).show();
     }
+    //INSERT ALUMNOS
     public void insertarAlumno(String nom, String edad, String curso, String notaM){
         ContentValues CV = new ContentValues();
         CV.put(ATR_NOM,nom);
@@ -68,9 +74,11 @@ public class MyDbAdapter implements Parcelable {
         Toast.makeText(getContext(),"Añadido: "+nom,Toast.LENGTH_LONG).show();
 
     }
+    //CERRAR BD
     public void close(){
         db.close();
     }
+    //ABRIR BD
     public void open (){
         try{
             db = myDbHelper.getWritableDatabase();
@@ -80,7 +88,7 @@ public class MyDbAdapter implements Parcelable {
     }
 
 
-
+    //SELECT de ALUMNOS
     public ArrayList<Alumno> selectAlumnos(String selectCiclo, String selectCurso){
         ArrayList<Alumno> alumnos = new ArrayList();
         Cursor c = null;
@@ -115,6 +123,7 @@ public class MyDbAdapter implements Parcelable {
         }
         return alumnos;
     }
+    //DELETE ITEM
     public void deleteItem(int id, String destino){
         switch (destino){
             case "prof":
@@ -126,6 +135,7 @@ public class MyDbAdapter implements Parcelable {
         }
     }
 
+    //SELECT PROFESORES
     public ArrayList<Profesor> selectProfesores(String selectCiclo, String selectCurso){
         ArrayList<Profesor> profesores = new ArrayList();
         Cursor c = null;
@@ -161,10 +171,13 @@ public class MyDbAdapter implements Parcelable {
         return profesores;
 
     }
+    //ELIMINAR BASE DE DATOS
     public void dropDatabase(){
         context.deleteDatabase(DATA_BASE_NAME);
     }
 
+
+    //CLASE MY DBHELPER
     private static class MyDbHelper extends SQLiteOpenHelper{
 
         public MyDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -184,6 +197,14 @@ public class MyDbAdapter implements Parcelable {
             onCreate(db);
         }
     }
+
+
+
+
+
+
+
+
 
     protected MyDbAdapter(Parcel in) {
 
